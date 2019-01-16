@@ -86,11 +86,11 @@ tf.random_gamma
 
 `print(sess.graph.as_graph_def())`
 
-## Variables
+# Variables
 
 * Problem with constants: Makes loading graphs expensive when constants are big
 
-### Use `tf.get_variable()`
+## Use `tf.get_variable()`
 
 ```python
 tf.get_variable(
@@ -115,7 +115,7 @@ m = tf.get_variable("matrix", initializer=tf.constant([[0, 1], [2, 3]]))
 W = tf.get_variable("big_matrix", shape=(784, 10), initializer=tf.zeros_initializer())
 ```
 
-### `tf.Variable()` is not recommended
+## `tf.Variable()` is not recommended
 
 ```python
 x.initializer # init op
@@ -124,7 +124,7 @@ x.assign(...) # write op
 x.assign_add(...) # and more 
 ```
 
-### Variable Initialization
+## Variable Initialization
 
 * Initializer is an op. You need to execute it within the context of a session
 
@@ -144,13 +144,13 @@ with tf.Session() as sess:
   
 ```
 
-### `eval()`
+## `eval()`
 
 `print(W.eval()) == print(sess.run(W))
 
-### `tf.Variable.assign()`
+## `tf.Variable.assign()`
 
-#### operations needs to be executed in a session to take effect
+### operations needs to be executed in a session to take effect
 
 ```python
 W = tf.Variable(10)
@@ -169,7 +169,7 @@ with tf.Session() as sess:
 
 Similar operations are `assign_add()` and `assign_sub()` etc
 
-#### Each session maintains its own copy of variables
+### Each session maintains its own copy of variables
 
 ```python
 W = tf.Variable(10)
@@ -204,11 +204,11 @@ with g.control_dependencies([a, b, c]):
     e = ...
 ```
 
-## Placeholders
+# Placeholders
 
 `tf.placeholder(dtype, shape=None, name=None)`
 
-### Feed multiple data points
+## Feed multiple data points
 
 * Do it one at a time
 
@@ -218,12 +218,12 @@ with tf.Session() as sess:
         print(sess.run(c, {a: a_value}))
 ```
 
-### Feedable tensor
+## Feedable tensor
 
 * You can feed_dict any feedable tensor. Placeholder is just a way to indicate that something must be fed
 * `tf.Graph.is_feedable(tensor)` True if and only if tensor is feedable
 
-#### Feeding values to TF ops
+### Feeding values to TF ops
 
 * Helpful for testing. Feed in dummy values to test parts o fa large graph
 
@@ -236,7 +236,7 @@ with tf.Session() as sess:
     sess.run(b, feed_dict={a: 15}) # >> 45
 ```
 
-## Lazy Loading
+# Lazy Loading
 
 * Normal Loading
 
@@ -266,7 +266,7 @@ with tf.Session() as sess:
 writer.close()
 ```
 
-### Solution
+## Solution
 
 1. Separate definition o fops from computing/running ops
 2. Use Python property to ensure function is also loaded once the first time it is called
